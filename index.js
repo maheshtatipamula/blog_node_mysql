@@ -10,7 +10,7 @@ const db = require("./config/dbConnect");
 const mysql = require("mysql");
 const morgan = require("morgan");
 const { notFound, errorHandler } = require("./middleware/errorHandler");
-
+const path = require("path");
 const app = express();
 
 const PORT = process.env.PORT || 5005;
@@ -23,6 +23,8 @@ app.use(
   })
 );
 app.use(express.json({ limit: "50mb" }));
+// app.use("/static", express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(morgan());
