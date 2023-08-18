@@ -13,10 +13,10 @@ const isAuthenticated = expressAsyncHandler(async (req, res, next) => {
         next();
       }
     } catch (err) {
-      res.json("not authorized ");
+      res.status(400).json("not authorized ");
     }
   } else {
-    return res.json("No TOKEN present");
+    return res.status(400).json("No TOKEN present");
   }
   // console.log(access_token);
   // if (!access_token) return res.json("No Access Token Present");

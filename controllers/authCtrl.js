@@ -13,7 +13,7 @@ const register = asyncHandler(async (req, res) => {
 
   const q = "SELECT * FROM users WHERE username=? OR email=? ";
   db.query(q, [username, email], async (err, data) => {
-    if (err) return res.json(err);
+    if (err) return res.status(400).json(err);
     if (data.length) return res.status(409).json("user already exists");
 
     const salt = bcrypt.genSaltSync(10);
@@ -34,7 +34,7 @@ const login = asyncHandler(async (req, res) => {
   // CHECK USER
   const q = "SELECT * FROM users WHERE   username=?";
   db.query(q, [username], async (err, data) => {
-    if (err) return res.json(err);
+    if (err) return res.status(400).json(err);
 
     if (data.length === 0) return res.status(404).json("User Not Found");
     //CHECK PASSWORD

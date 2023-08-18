@@ -102,7 +102,7 @@ const editPost = asyncHandler(async (req, res) => {
 
   db.query(q, [...values], async (err, data) => {
     if (err) {
-      return res.json(err);
+      return res.status(400).json(err);
     } else {
       return res.json("post have been updated");
     }
@@ -128,7 +128,8 @@ const deletePost = asyncHandler(async (req, res) => {
   const postId = req.params.id;
   const q = "DELETE FROM posts WHERE `id`=? AND `userid`=?";
   db.query(q, [postId, req.userId], async (err, data) => {
-    if (err) return res.status(403).json("You Can Delete Only your Post");
+    if (err)
+      return res.status(400).status(403).json("You Can Delete Only your Post");
 
     return res.json("Post had been Deleted");
   });
