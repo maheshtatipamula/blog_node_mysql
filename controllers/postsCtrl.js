@@ -33,25 +33,27 @@ const getMyBlogs = asyncHandler(async (req, res) => {
   // Get user ID from request params
 
   // Get category from request params
-  const category = req.params.category;
+  // const category = req.params.category;
 
-  let sqlQuery = "SELECT * FROM blog.posts WHERE userid = ?";
-  const params = [id];
+  // let sqlQuery = "SELECT * FROM blog.posts WHERE userid = ?";
+  // const params = [id];
 
-  // Check if category is provided
-  if (category !== undefined) {
-    sqlQuery += " AND category = ?";
-    params.push(category);
-  }
-  db.query(sqlQuery, params, (err, data) => {
-    if (err) return res.json(err);
+  // // Check if category is provided
+  // if (category !== undefined) {
+  //   sqlQuery += " AND category = ?";
+  //   params.push(category);
+  // }
+  // db.query(sqlQuery, params, (err, data) => {
+
+  // });
+  const q = req.query.category
+    ? "SELECT * FROM posts WHERE category=? AND  WHERE userid=?"
+    : "SELECT * FROM posts WHERE userid=?";
+  db.query(q, [req.query.category, id], (err, data) => {
+    if (err) return res.status(400).json(err);
 
     return res.status(200).json(data);
   });
-  const q = req.query.category
-    ? "SELECT * FROM posts WHERE category=? WHERE userid=?"
-    : "SELECT * FROM posts WHERE userid=?";
-  db.query(q, [req.query.category, id], (err, data) => {});
 });
 
 const addImage = asyncHandler(async (req, res) => {
