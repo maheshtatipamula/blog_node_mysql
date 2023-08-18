@@ -38,10 +38,11 @@ const login = asyncHandler(async (req, res) => {
 
     if (data.length === 0) return res.status(404).json("User Not Found");
     //CHECK PASSWORD
-    const isPasswordMatched = bcrypt.compare(
+    const isPasswordMatched = await bcrypt.compare(
       req.body.password,
       data[0].password
     );
+ 
 
     if (!isPasswordMatched)
       return res.status(400).json("Wrong Username or Password");
