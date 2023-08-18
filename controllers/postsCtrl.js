@@ -46,10 +46,8 @@ const getMyBlogs = asyncHandler(async (req, res) => {
   // db.query(sqlQuery, params, (err, data) => {
 
   // });
-  const q = req.query.category
-    ? "SELECT * FROM posts WHERE category=? AND  WHERE userid=?"
-    : "SELECT * FROM posts WHERE userid=?";
-  db.query(q, [req.query.category, id], (err, data) => {
+  const q = "SELECT * FROM posts WHERE userid=?";
+  db.query(q, [id], (err, data) => {
     if (err) return res.status(400).json(err);
 
     return res.status(200).json(data);
